@@ -35,25 +35,41 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 });
 
 // Handle context menu clicks
-chrome.contextMenus.onClicked.addListener((info, tab) => {
+chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId === 'text-to-voice' && info.selectionText) {
     // Store the selected text
     selectedText = info.selectionText;
     
     // Open side panel to show the text being played
-    chrome.sidePanel.open({ windowId: tab.windowId }).catch(() => {
-      console.log('Could not open side panel');
-    });
-    
-    // Notify the side panel to display and play the text
-    chrome.runtime.sendMessage({
-      target: 'sidepanel',
-      action: 'playFromContextMenu',
-      text: info.selectionText
-    }).catch(() => {
-      // Side panel might not be ready yet, play anyway
+    try {
+      await chrome.sidePanel.open({ windowId: tab.windowId });
+      
+      // Wait a bit for the side panel to initialize, then send message with retries
+      const sendWithRetry = async (retries = 5) => {
+        for (let i = 0; i < retries; i++) {
+          try {
+            await chrome.runtime.sendMessage({
+              target: 'sidepanel',
+              action: 'playFromContextMenu',
+              text: info.selectionText
+            });
+            return; // Success, exit
+          } catch (error) {
+            if (i < retries - 1) {
+              // Wait progressively longer between retries
+              await new Promise(resolve => setTimeout(resolve, 100 * (i + 1)));
+            }
+          }
+        }
+        // If all retries failed, play anyway
+        playText(info.selectionText);
+      };
+      
+      sendWithRetry();
+    } catch (error) {
+      console.log('Could not open side panel:', error);
       playText(info.selectionText);
-    });
+    }
   }
 });
 
