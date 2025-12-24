@@ -82,8 +82,7 @@ read4you_chrome/
 │   ├── readability.js      # Mozilla Readability library
 │   └── icons/              # Extension icons (16x16, 48x48, 128x128)
 ├── LICENSE                 # CC BY-NC-ND 4.0 License
-├── README.md               # This file
-└── issues.md               # Detailed code review and improvement suggestions
+└── README.md               # This file
 ```
 
 ## Permissions
@@ -164,9 +163,12 @@ read4you_chrome/
 - [ ] Word-by-word highlighting option
 - [ ] Save reading position
 - [ ] Reading history
+- [ ] Custom color themes beyond high contrast
+- [ ] More language options
+
 ## Contributing
 
-Contributions, issues, and feature requests are welcome! See `issues.md` for detailed code review and improvement suggestions.
+Contributions, issues, and feature requests are welcome!
 
 ## License
 
@@ -177,6 +179,4 @@ You are free to share and use this extension for non-commercial purposes with pr
 ## Author
 
 Copyright (c) 2025 aikeymouse
-## License
 
-MIT License
