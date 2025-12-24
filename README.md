@@ -2,6 +2,20 @@
 
 A Chrome extension designed for people with weak vision to listen to web content. Select text on any webpage or PDF file and play it as audio using Google Translate's text-to-speech API with accessible controls and high contrast mode.
 
+## Quick Setup
+
+![Chrome Extensions Page](docs/images/extensions_tab.png)
+
+1. Clone or download this repository
+2. Open Chrome and navigate to `chrome://extensions/`
+3. Enable **Developer mode** (toggle in top right corner)
+4. Click **"Load unpacked"**
+5. Navigate to the repository folder and select the **`src`** folder
+6. The extension is now installed! Click the puzzle icon (🧩) in Chrome's toolbar, find "Read4You", and click the pin icon to keep it visible
+7. Click the Read4You icon in your toolbar to open the side panel
+
+![Chrome Extensions Page](docs/images/sidepanel.png)
+
 ## Features
 
 ### 🎯 Core Features
@@ -25,13 +39,7 @@ A Chrome extension designed for people with weak vision to listen to web content
 - Customizable language selection with native language announcements
 - Auto-saves all preferences (language selection, current language, contrast mode)
 
-## Installation
-
-1. Clone or download this repository
-2. Open Chrome and navigate to `chrome://extensions/`
-3. Enable "Developer mode" in the top right corner
-4. Click "Load unpacked"
-5. Select the `src` folder from this repository
+![Chrome Extensions Page](docs/images/sidepanel_contrast.png)
 
 ## Usage
 
