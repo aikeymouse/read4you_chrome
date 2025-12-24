@@ -1,4 +1,5 @@
 const { test, expect } = require('../fixtures');
+const { waitForAndVerifyHighlightedSentence } = require('../helpers');
 
 test.describe('Playback Controls', () => {
   test('should pause, resume, and navigate sentences', async ({ context, page, extensionId }) => {
@@ -62,50 +63,29 @@ test.describe('Playback Controls', () => {
     const sentences = sidePanelPage.locator('.sentence');
     await expect(sentences.first()).toBeVisible({ timeout: 5000 });
     
-    // Get current highlighted sentence before next
-    const getCurrentHighlightedText = async () => {
-      const playingSentence = sidePanelPage.locator('.sentence.playing').first();
-      await playingSentence.waitFor({ state: 'visible', timeout: 5000 });
-      const text = await playingSentence.textContent();
-      return text.trim();
-    };
-    
-    const initialSentence = await getCurrentHighlightedText();
-    expect(initialSentence).toBe('The extension provides several useful features.');
+    const initialSentence = await waitForAndVerifyHighlightedSentence(sidePanelPage, 'The extension provides several useful features.');
     console.log(`✓ Initial sentence: "${initialSentence}"`);
     
     // Test Next sentence
     const nextBtn = sidePanelPage.locator('#nextSentenceBtn');
     await nextBtn.click();
-    await sidePanelPage.waitForTimeout(1000);
-    
-    const nextSentence = await getCurrentHighlightedText();
-    expect(nextSentence).toBe('First, it highlights each sentence as it is being read.');
+    const nextSentence = await waitForAndVerifyHighlightedSentence(sidePanelPage, 'First, it highlights each sentence as it is being read.');
     console.log(`✓ Next sentence: "${nextSentence}"`);
     
     // Test Previous sentence
     const prevBtn = sidePanelPage.locator('#prevSentenceBtn');
     await prevBtn.click();
-    await sidePanelPage.waitForTimeout(1000);
-    
-    const prevSentence = await getCurrentHighlightedText();
-    expect(prevSentence).toBe('The extension provides several useful features.');
+    const prevSentence = await waitForAndVerifyHighlightedSentence(sidePanelPage, 'The extension provides several useful features.');
     console.log(`✓ Previous sentence: "${prevSentence}"`);
     
     // Test Next again to move forward
     await nextBtn.click();
-    await sidePanelPage.waitForTimeout(1000);
-    
-    const afterNext = await getCurrentHighlightedText();
-    expect(afterNext).toBe('First, it highlights each sentence as it is being read.');
+    const afterNext = await waitForAndVerifyHighlightedSentence(sidePanelPage, 'First, it highlights each sentence as it is being read.');
     console.log(`✓ Navigated back to next sentence: "${afterNext}"`);
     
     // Test Next one more time
     await nextBtn.click();
-    await sidePanelPage.waitForTimeout(1000);
-    
-    const thirdSentence = await getCurrentHighlightedText();
-    expect(thirdSentence).toBe('Second, it allows users to pause and resume playback at any time.');
+    const thirdSentence = await waitForAndVerifyHighlightedSentence(sidePanelPage, 'Second, it allows users to pause and resume playback at any time.');
     console.log(`✓ Third sentence: "${thirdSentence}"`);
     
     // Test Stop
