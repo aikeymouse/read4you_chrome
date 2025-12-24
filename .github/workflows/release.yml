@@ -1,0 +1,51 @@
+name: Build Extension Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # Triggers on version tags like v1.0.0, v1.2.3, etc.
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Get tag version
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+      
+      - name: Create release ZIP
+        run: |
+          cd src
+          zip -r ../read4you-${{ steps.get_version.outputs.VERSION }}.zip . -x "*.DS_Store" -x "__MACOSX/*"
+          cd ..
+          ls -lh read4you-*.zip
+      
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: read4you-${{ steps.get_version.outputs.VERSION }}.zip
+          tag_name: ${{ steps.get_version.outputs.VERSION }}
+          name: Release ${{ steps.get_version.outputs.VERSION }}
+          body: |
+            ## Read4You Chrome Extension Release ${{ steps.get_version.outputs.VERSION }}
+            
+            ### Installation
+            1. Download `read4you-${{ steps.get_version.outputs.VERSION }}.zip`
+            2. Extract the ZIP file
+            3. Open Chrome and go to `chrome://extensions/`
+            4. Enable "Developer mode"
+            5. Click "Load unpacked" and select the extracted folder
+            
+            ### What's included
+            - Text-to-speech for web pages and PDFs
+            - Sentence-by-sentence navigation
+            - High contrast mode
+            - Playback controls
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
