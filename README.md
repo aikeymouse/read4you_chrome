@@ -27,10 +27,11 @@ A Chrome extension designed for people with weak vision to listen to web content
 
 ## Installation
 
-1. Open Chrome and navigate to `chrome://extensions/`
-2. Enable "Developer mode" in the top right corner
-3. Click "Load unpacked"
-4. Select the extension folder
+1. Clone or download this repository
+2. Open Chrome and navigate to `chrome://extensions/`
+3. Enable "Developer mode" in the top right corner
+4. Click "Load unpacked"
+5. Select the `src` folder from this repository
 
 ## Usage
 
@@ -63,23 +64,26 @@ A Chrome extension designed for people with weak vision to listen to web content
 - **A−**: Decrease text size
 - **A+**: Increase text size
 
-## Files Structure
+## Repository Structure
 
 ```
-text2voice_chrome/
-├── manifest.json       # Extension configuration
-├── background.js       # Service worker handling audio playback
-├── offscreen.html      # Offscreen document for audio API
-├── offscreen.js        # Audio queue management
-├── content.js          # Content script for text selection
-├── sidepanel.html      # Side panel interface
-├── popup.js            # Side panel functionality
-├── popup.css           # Side panel styling
-├── pdf.js              # PDF.js library (non-minified)
-├── pdf.worker.js       # PDF.js worker
-├── readability.js      # Mozilla Readability library
-├── icons/              # Extension icons (16x16, 48x48, 128x128)
-└── README.md           # This file
+read4you_chrome/
+├── src/                    # Extension source files
+│   ├── manifest.json       # Extension configuration
+│   ├── background.js       # Service worker handling audio playback
+│   ├── offscreen.html      # Offscreen document for audio API
+│   ├── offscreen.js        # Audio queue management
+│   ├── content.js          # Content script for text selection
+│   ├── sidepanel.html      # Side panel interface
+│   ├── popup.js            # Side panel functionality
+│   ├── popup.css           # Side panel styling
+│   ├── pdf.js              # PDF.js library (non-minified)
+│   ├── pdf.worker.js       # PDF.js worker
+│   ├── readability.js      # Mozilla Readability library
+│   └── icons/              # Extension icons (16x16, 48x48, 128x128)
+├── LICENSE                 # CC BY-NC-ND 4.0 License
+├── README.md               # This file
+└── issues.md               # Detailed code review and improvement suggestions
 ```
 
 ## Permissions
@@ -160,9 +164,19 @@ text2voice_chrome/
 - [ ] Word-by-word highlighting option
 - [ ] Save reading position
 - [ ] Reading history
-- [ ] Custom color themes beyond high contrast
-- [ ] More language options
+## Contributing
 
+Contributions, issues, and feature requests are welcome! See `issues.md` for detailed code review and improvement suggestions.
+
+## License
+
+This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0).
+
+You are free to share and use this extension for non-commercial purposes with proper attribution. See the [LICENSE](LICENSE) file for details.
+
+## Author
+
+Copyright (c) 2025 aikeymouse
 ## License
 
 MIT License
