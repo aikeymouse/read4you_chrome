@@ -3,7 +3,7 @@ const { test, expect } = require('./fixtures');
 test.describe('Side Panel Text Selection Playback', () => {
   test('should play selected text using side panel button', async ({ context, page, extensionId }) => {
     // Navigate to test HTML page
-    await page.goto('https://raw.githubusercontent.com/aikeymouse/read4you_chrome/main/tests/test-data/sample.html');
+    await page.goto('https://aikeymouse.github.io/read4you_chrome/test-data/sample.html');
     await page.waitForLoadState('networkidle');
     
     // Open side panel by clicking extension icon (we'll do this manually first)

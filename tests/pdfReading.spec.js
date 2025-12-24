@@ -3,7 +3,7 @@ const { test, expect } = require('./fixtures');
 test.describe('PDF Reading', () => {
   test('should read PDF using Read Article button', async ({ context, page, extensionId }) => {
     // Navigate to test PDF
-    await page.goto('https://raw.githubusercontent.com/aikeymouse/read4you_chrome/main/tests/test-data/sample.pdf');
+    await page.goto('https://aikeymouse.github.io/read4you_chrome/test-data/sample.pdf');
     
     // Wait for PDF to load
     await page.waitForTimeout(3000);

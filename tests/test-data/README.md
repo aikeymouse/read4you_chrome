@@ -18,14 +18,16 @@ All files contain the same test content with:
 
 ## Usage in Tests
 
-Tests access these files via GitHub raw URLs:
+Tests access these files via GitHub Pages URLs:
 
 ```javascript
 // HTML page
-const htmlUrl = 'https://raw.githubusercontent.com/aikeymouse/read4you_chrome/main/tests/test-data/sample.html';
+const htmlUrl = 'https://aikeymouse.github.io/read4you_chrome/test-data/sample.html';
 
 // PDF document
-const pdfUrl = 'https://raw.githubusercontent.com/aikeymouse/read4you_chrome/main/tests/test-data/sample.pdf';
+const pdfUrl = 'https://aikeymouse.github.io/read4you_chrome/test-data/sample.pdf';
 ```
 
-This ensures tests work in any environment without needing local file:// URLs.
+These files are also published in the `/docs` folder for GitHub Pages hosting.
+
+This ensures tests work in any environment with properly rendered HTML and accessible PDFs.
