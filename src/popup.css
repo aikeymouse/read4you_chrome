@@ -545,4 +545,40 @@ body.high-contrast .dialog-btn:not(.dialog-btn-primary) {
   border: 1px solid #ffffff;
 }
 
+/* Footer */
+.footer {
+  margin-top: auto;
+  padding: 15px 0 5px 0;
+  text-align: center;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.footer a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.footer a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+body.high-contrast .footer {
+  color: #ffffff;
+  border-top: 1px solid #ffffff;
+}
+
+body.high-contrast .footer a {
+  color: #ffffff;
+  text-decoration: underline;
+}
 
