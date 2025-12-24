@@ -83,8 +83,8 @@ read4you_chrome/
 │   ├── offscreen.js        # Audio queue management
 │   ├── content.js          # Content script for text selection
 │   ├── sidepanel.html      # Side panel interface
-│   ├── popup.js            # Side panel functionality
-│   ├── popup.css           # Side panel styling
+│   ├── sidepanel.js        # Side panel functionality
+│   ├── sidepanel.css       # Side panel styling
 │   ├── pdf.js              # PDF.js library (non-minified)
 │   ├── pdf.worker.js       # PDF.js worker
 │   ├── readability.js      # Mozilla Readability library
