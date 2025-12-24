@@ -68,60 +68,76 @@ function playNextInQueue() {
 
   const url = audioQueue.shift();
   console.log('[Offscreen] Playing sentence', currentSentenceIndex, 'Queue remaining:', audioQueue.length);
-  currentAudio = new Audio(url);
   
-  // Flag to prevent double error handling
-  let errorHandled = false;
+  // Small delay between requests to avoid rate limiting (especially for rapid sequential playback)
+  const delayMs = currentSentenceIndex > 0 ? 250 : 0;
   
-  // Set up event handlers BEFORE playing
-  currentAudio.onended = () => {
-    console.log('[Offscreen] Audio ended for sentence', currentSentenceIndex);
-    // Only play next sentence if still supposed to be playing
-    if (isPlaying && !errorHandled) {
-      currentSentenceIndex++;
-      playNextInQueue();
-    } else {
-      console.log('[Offscreen] Not continuing - isPlaying:', isPlaying, 'errorHandled:', errorHandled);
+  setTimeout(() => {
+    // Check again if we should still be playing after delay
+    if (!isPlaying) {
+      console.log('[Offscreen] Playback stopped during delay');
+      return;
     }
-  };
+    
+    currentAudio = new Audio(url);
+    
+    // Flag to prevent double error handling
+    let errorHandled = false;
+    
+    // Set up event handlers BEFORE playing
+    currentAudio.onended = () => {
+      console.log('[Offscreen] Audio ended for sentence', currentSentenceIndex);
+      // Only play next sentence if still supposed to be playing
+      if (isPlaying && !errorHandled) {
+        currentSentenceIndex++;
+        playNextInQueue();
+      } else {
+        console.log('[Offscreen] Not continuing - isPlaying:', isPlaying, 'errorHandled:', errorHandled);
+      }
+    };
 
-  currentAudio.onerror = (error) => {
-    console.error('[Offscreen] Audio playback error:', error);
-    if (errorHandled) {
-      console.log('[Offscreen] Error already handled, skipping');
-      return;
+    currentAudio.onerror = (error) => {
+      console.error('[Offscreen] Audio playback error:', error);
+      console.error('[Offscreen] Failed URL:', url);
+      if (errorHandled) {
+        console.log('[Offscreen] Error already handled, skipping');
+        return;
+      }
+      errorHandled = true;
+      // Continue to next sentence on error
+      if (isPlaying) {
+        console.log('[Offscreen] Skipping failed sentence, continuing to next');
+        currentSentenceIndex++;
+        playNextInQueue();
+      }
+    };
+    
+    // Notify which sentence is now playing (skip for announcements)
+    if (!isAnnouncement) {
+      chrome.runtime.sendMessage({
+        target: 'popup',
+        action: 'sentenceStarted',
+        index: currentSentenceIndex
+      }).catch(() => {});
     }
-    errorHandled = true;
-    // Only continue if still supposed to be playing
-    if (isPlaying) {
-      currentSentenceIndex++;
-      playNextInQueue();
-    }
-  };
-  
-  // Notify which sentence is now playing (skip for announcements)
-  if (!isAnnouncement) {
-    chrome.runtime.sendMessage({
-      target: 'popup',
-      action: 'sentenceStarted',
-      index: currentSentenceIndex
-    }).catch(() => {});
-  }
-  
-  // Start playing
-  currentAudio.play().catch(error => {
-    console.error('[Offscreen] Error starting audio:', error);
-    if (errorHandled) {
-      console.log('[Offscreen] Error already handled, skipping');
-      return;
-    }
-    errorHandled = true;
-    // Only continue if still supposed to be playing
-    if (isPlaying) {
-      currentSentenceIndex++;
-      playNextInQueue();
-    }
-  });
+    
+    // Start playing
+    currentAudio.play().catch(error => {
+      console.error('[Offscreen] Error starting audio:', error);
+      console.error('[Offscreen] Failed URL:', url);
+      if (errorHandled) {
+        console.log('[Offscreen] Error already handled, skipping');
+        return;
+      }
+      errorHandled = true;
+      // Continue to next sentence on error
+      if (isPlaying) {
+        console.log('[Offscreen] Skipping failed sentence, continuing to next');
+        currentSentenceIndex++;
+        playNextInQueue();
+      }
+    });
+  }, delayMs);
 }
 
 function stopAudio() {

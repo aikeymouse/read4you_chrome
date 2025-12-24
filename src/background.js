@@ -229,7 +229,9 @@ async function playText(text, sentences, language = 'en', isAnnouncement = false
     
     // Create URLs for each sentence with the specified language
     const urls = sentenceArray.map(sentence => {
-      const encodedText = encodeURIComponent(sentence);
+      // Normalize whitespace: replace multiple spaces/tabs/newlines with single space
+      const normalizedSentence = sentence.replace(/\s+/g, ' ').trim();
+      const encodedText = encodeURIComponent(normalizedSentence);
       return `https://translate.google.com/translate_tts?tl=${language}&q=${encodedText}&client=tw-ob`;
     });
 

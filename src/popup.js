@@ -846,8 +846,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Helper function to split text into sentences
   function splitIntoSentences(text) {
+    // Normalize whitespace first: replace multiple spaces/tabs/newlines with single space
+    const normalizedText = text.replace(/\s+/g, ' ').trim();
+    
     // Replace common abbreviations temporarily to avoid splitting on them
-    const tempText = text
+    const tempText = normalizedText
       .replace(/\be\.g\./gi, 'E_G_TEMP')
       .replace(/\bi\.e\./gi, 'I_E_TEMP')
       .replace(/\betc\./gi, 'ETC_TEMP')
