@@ -1,0 +1,34 @@
+{
+  "name": "read4you_chrome_tests",
+  "version": "1.0.0",
+  "description": "End-to-end tests for Read4You Chrome extension using Playwright",
+  "private": true,
+  "directories": {
+    "test": "./"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aikeymouse/read4you_chrome.git",
+    "directory": "tests"
+  },
+  "keywords": [
+    "playwright",
+    "e2e-testing",
+    "chrome-extension",
+    "accessibility"
+  ],
+  "author": "aikeymouse",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aikeymouse/read4you_chrome/issues"
+  },
+  "homepage": "https://github.com/aikeymouse/read4you_chrome#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0"
+  }
+}
