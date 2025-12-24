@@ -24,7 +24,3 @@ GitHub Pages will automatically publish the contents of this folder.
 - `index.html` - Landing page with links to test data
 - `test-data/sample.html` - HTML page for testing text selection and playback
 - `test-data/sample.pdf` - PDF document for testing PDF reading functionality
-
-## Note
-
-The source test data files are maintained in `/tests/test-data/` and copied to `/docs/test-data/` for GitHub Pages hosting.
