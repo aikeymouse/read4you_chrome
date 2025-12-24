@@ -1,4 +1,4 @@
-const { test, expect } = require('./fixtures');
+const { test, expect } = require('../fixtures');
 
 test.describe('Side Panel Text Selection Playback', () => {
   test('should play selected text using side panel button', async ({ context, page, extensionId }) => {

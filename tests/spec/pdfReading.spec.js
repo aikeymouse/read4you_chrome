@@ -1,4 +1,4 @@
-const { test, expect } = require('./fixtures');
+const { test, expect } = require('../fixtures');
 
 test.describe('PDF Reading', () => {
   test('should read PDF using Read Article button', async ({ context, page, extensionId }) => {

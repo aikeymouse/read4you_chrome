@@ -1,4 +1,4 @@
-const { test, expect } = require('./fixtures');
+const { test, expect } = require('../fixtures');
 
 test.describe('Playback Controls', () => {
   test('should pause, resume, and navigate sentences', async ({ context, page, extensionId }) => {

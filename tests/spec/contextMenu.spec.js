@@ -1,4 +1,4 @@
-const { test, expect } = require('./fixtures');
+const { test, expect } = require('../fixtures');
 
 test.describe('Context Menu Playback', () => {
   test('should play selected text from context menu and update side panel', async ({ context, page, extensionId }) => {

@@ -5,7 +5,7 @@ const { defineConfig } = require('@playwright/test');
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
-  testDir: './',
+  testDir: './spec',
   testMatch: '**/*.spec.js',
   outputDir: './test-results',
   fullyParallel: false, // Run tests sequentially to avoid conflicts
