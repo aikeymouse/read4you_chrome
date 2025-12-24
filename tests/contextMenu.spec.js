@@ -2,8 +2,8 @@ const { test, expect } = require('./fixtures');
 
 test.describe('Context Menu Playback', () => {
   test('should play selected text from context menu and update side panel', async ({ context, page, extensionId }) => {
-    // Navigate to Wikipedia page
-    await page.goto('https://en.wikipedia.org/wiki/CPU_cache#LLC');
+    // Navigate to test HTML page
+    await page.goto('https://raw.githubusercontent.com/aikeymouse/read4you_chrome/main/tests/test-data/sample.html');
     
     // Wait for page to load
     await page.waitForLoadState('networkidle');

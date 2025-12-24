@@ -35,6 +35,15 @@ npm run test:debug
 - `sidepanelPlayback.spec.js` - Tests side panel Play button functionality
 - `pdfReading.spec.js` - Tests PDF extraction and reading
 - `playbackControls.spec.js` - Tests pause/resume/next/prev/stop controls
+- `test-data/` - Sample HTML and PDF files used by tests (accessed via GitHub raw URLs)
+
+## Test Data
+
+Tests use sample documents from the `test-data/` folder:
+- `sample.html` - HTML page with structured content for testing text selection
+- `sample.pdf` - PDF version for testing PDF reading functionality
+
+Both files are accessed via GitHub raw URLs to ensure tests work in any environment.
 
 ## Test Output
 
@@ -48,7 +57,8 @@ npx playwright show-report
 
 ## Notes
 
-- Tests use the real Google TTS API (no mocking)
+- Tests use sample documents from the `test-data/` folder via GitHub raw URLs
 - Extension loads from `../src` directory
 - All tests run sequentially to avoid conflicts
 - Tests open side panel in a new tab for easier automation
+- No external dependencies on Wikipedia or other third-party sites

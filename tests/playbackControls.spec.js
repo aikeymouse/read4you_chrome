@@ -2,8 +2,8 @@ const { test, expect } = require('./fixtures');
 
 test.describe('Playback Controls', () => {
   test('should pause, resume, and navigate sentences', async ({ context, page, extensionId }) => {
-    // Navigate to Wikipedia
-    await page.goto('https://en.wikipedia.org/wiki/CPU_cache#LLC');
+    // Navigate to test HTML page
+    await page.goto('https://raw.githubusercontent.com/aikeymouse/read4you_chrome/main/tests/test-data/sample.html');
     await page.waitForLoadState('networkidle');
     
     // Open side panel
