@@ -6,11 +6,11 @@ A Chrome extension designed for people with weak vision to listen to web content
 
 ![Chrome Extensions Page](docs/images/extensions_tab.png)
 
-1. Clone or download this repository
+1. Download the latest release from [Releases](https://github.com/aikeymouse/read4you_chrome/releases) and extract the ZIP file
 2. Open Chrome and navigate to `chrome://extensions/`
 3. Enable **Developer mode** (toggle in top right corner)
 4. Click **"Load unpacked"**
-5. Navigate to the repository folder and select the **`src`** folder
+5. Select the extracted folder
 6. The extension is now installed! Click the puzzle icon (🧩) in Chrome's toolbar, find "Read4You", and click the pin icon to keep it visible
 7. Click the Read4You icon in your toolbar to open the side panel
 
