@@ -37,7 +37,23 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 // Handle context menu clicks
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === 'text-to-voice' && info.selectionText) {
-    playText(info.selectionText);
+    // Store the selected text
+    selectedText = info.selectionText;
+    
+    // Open side panel to show the text being played
+    chrome.sidePanel.open({ windowId: tab.windowId }).catch(() => {
+      console.log('Could not open side panel');
+    });
+    
+    // Notify the side panel to display and play the text
+    chrome.runtime.sendMessage({
+      target: 'sidepanel',
+      action: 'playFromContextMenu',
+      text: info.selectionText
+    }).catch(() => {
+      // Side panel might not be ready yet, play anyway
+      playText(info.selectionText);
+    });
   }
 });
 

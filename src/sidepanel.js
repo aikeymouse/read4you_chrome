@@ -63,7 +63,35 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
+  // Handle playback from context menu
+  async function handleContextMenuPlay(text) {
+    if (!text || text.trim() === '') {
+      return;
+    }
 
+    // Reset flags
+    isManualNavigation = false;
+    isPlayingSequence = true;
+    isPaused = false;
+
+    // Show playing controls
+    showPlayingControls();
+
+    // Split into sentences
+    const sentences = splitIntoSentences(text);
+    displayText(sentences);
+
+    // Send text to background script to play
+    await chrome.runtime.sendMessage({
+      action: 'playText',
+      text: text,
+      sentences: sentences,
+      language: currentLanguage,
+      startIndex: 0
+    });
+    
+    showStatus('Playing audio from context menu...', 'success');
+  }
 
   // Check if current tab is a PDF
   async function updateButtonStates() {
@@ -121,7 +149,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Listen for messages from offscreen document
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.target === 'popup') {
+    if (request.target === 'popup' || request.target === 'sidepanel') {
       if (request.action === 'sentenceStarted') {
         // Don't update highlight if we're manually navigating
         if (!isManualNavigation) {
@@ -139,6 +167,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         showMainControls();
         // Re-enable both buttons when playback ends (unless PDF)
         checkAndEnableButtons();
+      } else if (request.action === 'playFromContextMenu') {
+        // Handle context menu "Play selected text"
+        handleContextMenuPlay(request.text);
       }
     }
   });
