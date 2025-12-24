@@ -27,12 +27,11 @@ test.describe('Playback Controls', () => {
     
     // Start playback (keep content page active so extension can query it)
     await sidePanelPage.locator('#playBtn').click();
-    await sidePanelPage.waitForTimeout(2000);
 
     // switch to side panel
     await sidePanelPage.bringToFront();
     
-    // Verify playback started
+    // Verify playback started - wait for playing controls to appear
     const playingControls = sidePanelPage.locator('#playingControls');
     await expect(playingControls).toBeVisible({ timeout: 5000 });
     
