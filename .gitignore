@@ -1,0 +1,28 @@
+# Development files
+dev_notes.txt
+.DS_Store
+.vscode/
+*.log
+issues.md
+
+# Node modules (if you add npm later)
+node_modules/
+
+# Build artifacts
+*.zip
+dist/
+
+# OS files
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE files
+.idea/
+*.iml
+
+# Temporary files
+*.tmp
+.cache/
+

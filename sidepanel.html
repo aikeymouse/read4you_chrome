@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Read4You</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <button id="languageToggle" class="language-toggle" title="Change language">EN</button>
+    <h1>🔊 Read4You</h1>
+    
+    <!-- Language selection dialog -->
+    <div id="languageDialog" class="language-dialog" style="display: none;">
+      <div class="language-dialog-content">
+        <h3>Select Languages</h3>
+        <p>Choose which languages to include in the toggle cycle:</p>
+        <div id="languageCheckboxes" class="language-checkboxes"></div>
+        <div class="language-dialog-buttons">
+          <button id="saveLanguages" class="dialog-btn dialog-btn-primary">Save</button>
+          <button id="cancelLanguages" class="dialog-btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="controls" id="mainControls">
+      <button id="playBtn" class="btn btn-circle">▶️</button>
+      <button id="readArticleBtn" class="btn btn-circle btn-article">📖</button>
+      <button id="stopBtn" class="btn btn-circle btn-stop">⏹️</button>
+    </div>
+    <div class="controls playing-controls" id="playingControls" style="display: none;">
+      <button id="prevSentenceBtn" class="btn btn-circle">⏮️</button>
+      <button id="pauseBtn" class="btn btn-circle">⏸️</button>
+      <button id="nextSentenceBtn" class="btn btn-circle">⏭️</button>
+      <button id="stopPlayingBtn" class="btn btn-circle btn-stop">⏹️</button>
+    </div>
+    <div id="status" class="status"></div>
+    <div id="textDisplay" class="text-display">
+      <div class="text-controls">
+        <div class="text-controls-left">
+          <button id="toggleContrast" class="text-size-btn" title="Toggle high contrast mode">◐</button>
+        </div>
+        <div class="text-controls-right">
+          <button id="decreaseTextSize" class="text-size-btn" title="Decrease text size">A−</button>
+          <button id="increaseTextSize" class="text-size-btn" title="Increase text size">A+</button>
+        </div>
+      </div>
+      <div id="textContent" class="text-content"></div>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

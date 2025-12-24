@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Read4You</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🔊 Read4You</h1>
+    <div class="info">
+      <p>Select text on the page and:</p>
+      <ul>
+        <li>Click the extension icon and press "Play"</li>
+        <li>Or right-click and select "Play selected text"</li>
+      </ul>
+    </div>
+    <div class="controls">
+      <button id="playBtn" class="btn btn-primary">▶️ Play Selected Text</button>
+      <button id="readArticleBtn" class="btn btn-article">📖 Read Full Article</button>
+      <button id="stopBtn" class="btn btn-secondary">⏹️ Stop</button>
+    </div>
+    <div id="status" class="status"></div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
