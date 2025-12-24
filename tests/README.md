@@ -35,15 +35,16 @@ npm run test:debug
 - `sidepanelPlayback.spec.js` - Tests side panel Play button functionality
 - `pdfReading.spec.js` - Tests PDF extraction and reading
 - `playbackControls.spec.js` - Tests pause/resume/next/prev/stop controls
-- `test-data/` - Sample HTML and PDF files used by tests (accessed via GitHub raw URLs)
 
 ## Test Data
 
-Tests use sample documents from the `test-data/` folder:
+Tests use sample documents hosted on GitHub Pages (from `/docs/test-data/`):
 - `sample.html` - HTML page with structured content for testing text selection
 - `sample.pdf` - PDF version for testing PDF reading functionality
 
-Both files are accessed via GitHub raw URLs to ensure tests work in any environment.
+URLs used in tests:
+- HTML: https://aikeymouse.github.io/read4you_chrome/test-data/sample.html
+- PDF: https://aikeymouse.github.io/read4you_chrome/test-data/sample.pdf
 
 ## Test Output
 
@@ -57,8 +58,9 @@ npx playwright show-report
 
 ## Notes
 
-- Tests use sample documents from the `test-data/` folder via GitHub raw URLs
+- Tests use sample documents hosted on GitHub Pages at `/docs/test-data/`
 - Extension loads from `../src` directory
 - All tests run sequentially to avoid conflicts
 - Tests open side panel in a new tab for easier automation
 - No external dependencies on Wikipedia or other third-party sites
+- GitHub Pages must be enabled for tests to work (see `/docs/README.md`)
