@@ -44,7 +44,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 // Listen for messages from content script and popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'playText') {
-    playText(request.text, request.sentences, request.language, request.isAnnouncement);
+    playText(request.text, request.sentences, request.language, request.isAnnouncement, request.startIndex);
     sendResponse({ success: true });
   } else if (request.action === 'stopAudio') {
     stopAudio();
@@ -203,7 +203,7 @@ function splitIntoSentences(text) {
 }
 
 // Function to play text as audio
-async function playText(text, sentences, language = 'en', isAnnouncement = false) {
+async function playText(text, sentences, language = 'en', isAnnouncement = false, startIndex = 0) {
   if (!text || text.trim() === '') {
     console.log('No text to play');
     return;
@@ -243,7 +243,8 @@ async function playText(text, sentences, language = 'en', isAnnouncement = false
         target: 'offscreen',
         action: 'playAudio',
         urls: urls,
-        isAnnouncement: isAnnouncement
+        isAnnouncement: isAnnouncement,
+        startIndex: startIndex
       }).catch(error => {
         console.error('Error sending message to offscreen:', error);
       });

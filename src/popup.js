@@ -128,30 +128,17 @@ document.addEventListener('DOMContentLoaded', async () => {
           highlightSentence(request.index);
         }
       } else if (request.action === 'playbackEnded') {
-        // If we're in a playing sequence, continue to next sentence
-        if (isPlayingSequence && currentSentenceIndex < currentSentences.length - 1) {
-          currentSentenceIndex++;
-          highlightSentence(currentSentenceIndex);
-          // Play next sentence
-          chrome.runtime.sendMessage({
-            action: 'playText',
-            text: currentSentences[currentSentenceIndex],
-            sentences: [currentSentences[currentSentenceIndex]],
-            language: currentLanguage
-          });
-        } else {
-          // Playback fully ended
-          isManualNavigation = false;
-          isPlayingSequence = false;
-          isPaused = false;
-          clearHighlights();
-          // Reset pause button to pause icon
-          pauseBtn.textContent = '⏸️';
-          // Show main controls when playback ends
-          showMainControls();
-          // Re-enable both buttons when playback ends (unless PDF)
-          checkAndEnableButtons();
-        }
+        // Playback fully ended
+        isManualNavigation = false;
+        isPlayingSequence = false;
+        isPaused = false;
+        clearHighlights();
+        // Reset pause button to pause icon
+        pauseBtn.textContent = '⏸️';
+        // Show main controls when playback ends
+        showMainControls();
+        // Re-enable both buttons when playback ends (unless PDF)
+        checkAndEnableButtons();
       }
     }
   });
@@ -302,7 +289,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           action: 'playText',
           text: selectedText,
           sentences: sentences,
-          language: currentLanguage
+          language: currentLanguage,
+          startIndex: 0
         });
         showStatus('Playing audio...', 'success');
       } else {
@@ -428,7 +416,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 action: 'playText',
                 text: result.text,
                 sentences: sentences,
-                language: currentLanguage
+                language: currentLanguage,
+                startIndex: 0
               });
               showStatus(`Reading PDF (${result.pages} pages)...`, 'success');
             } else {
@@ -514,7 +503,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             action: 'playText',
             text: result.text,
             sentences: sentences,
-            language: currentLanguage
+            language: currentLanguage,
+            startIndex: 0
           });
           showStatus(`Reading: ${result.title || 'Article'}`, 'success');
         } else {
@@ -569,15 +559,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       isPaused = false;
       pauseBtn.textContent = '⏸️';
       isPlayingSequence = true;
-      isManualNavigation = true; // Prevent highlight jump, will reset after sentence starts
       
       // Continue playing from current sentence
       if (currentSentences[currentSentenceIndex]) {
+        // Send remaining sentences from current position
+        const remainingSentences = currentSentences.slice(currentSentenceIndex);
         await chrome.runtime.sendMessage({
           action: 'playText',
-          text: currentSentences[currentSentenceIndex],
-          sentences: [currentSentences[currentSentenceIndex]],
-          language: currentLanguage
+          text: remainingSentences.join(' '),
+          sentences: remainingSentences,
+          language: currentLanguage,
+          startIndex: currentSentenceIndex
         });
         showStatus('Resumed playback', 'info');
       }
@@ -601,15 +593,19 @@ document.addEventListener('DOMContentLoaded', async () => {
       pauseBtn.textContent = '⏸️';
       currentSentenceIndex--;
       highlightSentence(currentSentenceIndex);
-      // Play the previous sentence
+      // Play from this sentence to the end
       if (currentSentences[currentSentenceIndex]) {
+        const remainingSentences = currentSentences.slice(currentSentenceIndex);
         await chrome.runtime.sendMessage({
           action: 'playText',
-          text: currentSentences[currentSentenceIndex],
-          sentences: [currentSentences[currentSentenceIndex]],
-          language: currentLanguage
+          text: remainingSentences.join(' '),
+          sentences: remainingSentences,
+          language: currentLanguage,
+          startIndex: currentSentenceIndex
         });
       }
+      // Reset flag after starting playback
+      isManualNavigation = false;
     }
   });
 
@@ -622,15 +618,19 @@ document.addEventListener('DOMContentLoaded', async () => {
       pauseBtn.textContent = '⏸️';
       currentSentenceIndex++;
       highlightSentence(currentSentenceIndex);
-      // Play the next sentence
+      // Play from this sentence to the end
       if (currentSentences[currentSentenceIndex]) {
+        const remainingSentences = currentSentences.slice(currentSentenceIndex);
         await chrome.runtime.sendMessage({
           action: 'playText',
-          text: currentSentences[currentSentenceIndex],
-          sentences: [currentSentences[currentSentenceIndex]],
-          language: currentLanguage
+          text: remainingSentences.join(' '),
+          sentences: remainingSentences,
+          language: currentLanguage,
+          startIndex: currentSentenceIndex
         });
       }
+      // Reset flag after starting playback
+      isManualNavigation = false;
     }
   });
 

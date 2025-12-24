@@ -3,6 +3,7 @@ let currentAudio = null;
 let audioQueue = [];
 let isPlaying = false;
 let currentSentenceIndex = 0;
+let startSentenceIndex = 0; // The starting index in the full document
 let playbackTimeout = null;
 let isAnnouncement = false;
 
@@ -12,7 +13,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 
   if (request.action === 'playAudio') {
-    playAudioQueue(request.urls, request.isAnnouncement || false);
+    playAudioQueue(request.urls, request.isAnnouncement || false, request.startIndex || 0);
     sendResponse({ success: true });
   } else if (request.action === 'stopAudio') {
     stopAudio();
@@ -22,8 +23,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   return true;
 });
 
-function playAudioQueue(urls, announcement = false) {
-  console.log('[Offscreen] playAudioQueue called with', urls.length, 'URLs', 'isAnnouncement:', announcement);
+function playAudioQueue(urls, announcement = false, startIndex = 0) {
+  console.log('[Offscreen] playAudioQueue called with', urls.length, 'URLs', 'isAnnouncement:', announcement, 'startIndex:', startIndex);
   
   // Stop any currently playing audio first
   stopAudio();
@@ -42,6 +43,7 @@ function playAudioQueue(urls, announcement = false) {
     audioQueue = [...urls];
     isPlaying = true;
     currentSentenceIndex = 0;
+    startSentenceIndex = startIndex;
     isAnnouncement = announcement;
     
     // Start playing the first sentence
@@ -67,7 +69,7 @@ function playNextInQueue() {
   }
 
   const url = audioQueue.shift();
-  console.log('[Offscreen] Playing sentence', currentSentenceIndex, 'Queue remaining:', audioQueue.length);
+  console.log('[Offscreen] Playing sentence', startSentenceIndex + currentSentenceIndex, 'Queue remaining:', audioQueue.length);
   
   // Small delay between requests to avoid rate limiting (especially for rapid sequential playback)
   const delayMs = currentSentenceIndex > 0 ? 250 : 0;
@@ -117,7 +119,7 @@ function playNextInQueue() {
       chrome.runtime.sendMessage({
         target: 'popup',
         action: 'sentenceStarted',
-        index: currentSentenceIndex
+        index: startSentenceIndex + currentSentenceIndex
       }).catch(() => {});
     }
     
