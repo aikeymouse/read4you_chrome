@@ -23,6 +23,13 @@ exports.test = base.extend({
     await context.close();
   },
   
+  page: async ({ context }, use) => {
+    // Use the first existing page (the blank tab that Chrome opens)
+    const pages = context.pages();
+    const page = pages.length > 0 ? pages[0] : await context.newPage();
+    await use(page);
+  },
+  
   extensionId: async ({ context }, use) => {
     const [background] = context.serviceWorkers();
     if (!background) {
