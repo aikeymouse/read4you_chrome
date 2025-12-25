@@ -43,7 +43,8 @@ test.describe('Playback Controls', () => {
     expect(displayedText).toContain('Second, it allows users to pause and resume playback at any time.');
     expect(displayedText).toContain('Third, users can navigate between sentences using next and previous buttons.');
     console.log('✓ Text displayed in pane');
-    
+    await sidePanelPage.waitForTimeout(1000);
+
     // Test Pause
     await controls.clickPause();
     await sidePanelPage.waitForTimeout(1000);
